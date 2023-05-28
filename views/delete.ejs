@@ -1,0 +1,25 @@
+<!-- home.ejs -->
+
+<%- include("partials/header"); -%>
+  <% if (posts.length === 0) { %>
+    <p>No posts found.</p>
+  <% } else { %>
+    <% posts.forEach(function(post) { %>
+      <div>
+        <h2><%= post.title %></h2>
+        <p>
+            <%=post.content.substring(0, 100) + " ..."%>
+            <a href="/posts/<%=post._id%>">Read More</a>
+        </p>
+        <!-- <p><%= post.content %></p> -->
+        <form method="POST" action="/delete/<%= post._id %>">
+          <!-- <button type="submit">Delete</button> -->
+          <button class="btn btn-primary" type="submit" name="button"> Delete  </button> <br> <br>
+        </form>
+      </div>
+      <hr>
+    <% }) %>
+  <% } %>
+
+
+  <%- include("partials/footer"); -%>
