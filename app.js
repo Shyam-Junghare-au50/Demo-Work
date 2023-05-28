@@ -22,7 +22,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 const secretKey = 'https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/blogDB", {useNewUrlParser: true});
+const db = 'mongodb+srv://techblogs151:abcd1234@cluster0.hh6jl0o.mongodb.net/blogDB?retryWrites=true&w=majority'
+mongoose.connect(db, {useNewUrlParser: true,useUnifiedTopology:true},(err)=>{
+  if(!err){
+    console.log("connected to db");
+  }else{
+    console.log(err);
+  }
+});
 
 const postSchema = {
   title: String,
@@ -116,6 +123,8 @@ app.post("/compose", function(req, res){
   post.save(function(err){
     if (!err){
         res.redirect("/");
+    }else{
+      console.log("Error");
     }
   });
 });
